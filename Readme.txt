@@ -25,3 +25,5 @@ This project is a single-page music player application built with HTML, CSS, and
 - A persistent player bar provides controls for play/pause, next/previous, volume, shuffle, and loop.
 - All playlist data is saved in the browser's local storage, so they will be available on subsequent visits.
 - The interface is responsive and adapts to different screen sizes.
+
+*there is also a dynamic version where the songs are grabbed from the folder but that is outside the scope of this assignment
