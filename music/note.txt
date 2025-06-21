@@ -1,0 +1,3 @@
+just to hold music files to use for this website normally would be connected to a backend server instead. 
+
+i also added a js file here to grab all the songs in the folder and let the website know whats avaliable. normally on a server but dont want to host one.
