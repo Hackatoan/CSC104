@@ -92,7 +92,7 @@ function renderPlaylistContent(playlistName) {
         <button class="song-plus-btn" title="Add to playlist" data-songid="${song.id}">+</button>
         <button class="play-btn" data-url="${song.url}" data-name="${song.name}">
           <img src="${imgSrc}" alt="cover" class="song-item-img">
-          <div class="song-item-name">${song.name}</div>
+          <span class="song-item-name">${song.name}</span>
         </button>
       `;
       grid.appendChild(div);

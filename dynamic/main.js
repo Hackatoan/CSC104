@@ -104,9 +104,9 @@ function renderSongs(songs) {
       <button class="song-plus-btn" title="Add to playlist" data-songid="${song.id}">+</button>
       <button class="play-btn" data-url="${song.url}" data-name="${song.name}" data-idx="${idx}">
         <img src="${imgSrc}" alt="cover" class="song-item-img">
-        <div class="song-item-name">
+        <span class="song-item-name">
           ${song.name}
-        </div>
+        </span>
       </button>
     `;
     grid.appendChild(div);

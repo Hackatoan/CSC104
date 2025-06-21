@@ -204,11 +204,14 @@ main {
 }
 
 .song-item-name {
-  padding: 0.75em;
-  /* No need for separate background, inherits from .song-item */
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  display: block; /* Add this line */
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left;
+  padding: 0.5em 0;
+  background: #222;
+  color: #fff;
+  border-radius: 0 0 8px 8px;
 }
 
 /* ====== 6. Player Bar ====== */
