@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Music Page</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- ========== SIDEBAR ========== -->
+      <nav id="sidebar" class="sidebar" aria-label="Sidebar">
+        <button id="home-link" style="margin-bottom: 1em">🏠 Home</button>
+        <button id="add-playlist-btn" style="margin-bottom: 1em">
+          ➕ Add Playlist
+        </button>
+        <div
+          style="
+            padding: 0.5em 0 0.25em 0.5em;
+            font-size: 0.95em;
+            color: #aaa;
+            letter-spacing: 1px;
+          "
+        >
+          Playlists
+        </div>
+        <div id="sidebar-list"></div>
+      </nav>
+      <!-- ========== MAIN CONTENT ========== -->
+      <div class="main-content">
+        <!-- ======= HEADER ======= -->
+        <header>
+          <button id="sidebar-toggle" aria-label="Toggle sidebar">
+            &#9776;
+          </button>
+          <input
+            type="text"
+            placeholder="Search for songs..."
+            style="flex: 1; margin: 0 1rem; max-width: 300px"
+          />
+          <button id="account-btn" aria-label="Account">
+            <span aria-hidden="true">👤</span>
+          </button>
+        </header>
+        <!-- ======= DYNAMIC MAIN AREA ======= -->
+        <main id="main-content">
+          <!-- Song grid or playlist content rendered here -->
+        </main>
+      </div>
+    </div>
+    <!-- ========== PLAYER BAR ========== -->
+    <footer>
+      <div id="player-bar" style="display: none">
+        <button id="player-shuffle" class="player-btn" title="Shuffle Off">
+          🔀
+        </button>
+        <button id="player-loop" class="player-btn" title="Loop Off">🔁</button>
+        <button id="player-prev" class="player-btn" title="Previous Song">
+          ⏮️
+        </button>
+        <button id="player-pause" class="player-btn">⏸️</button>
+        <button id="player-next" class="player-btn" title="Next Song">
+          ⏭️
+        </button>
+        <span id="player-title"></span>
+        <input
+          type="range"
+          id="player-volume"
+          min="0"
+          max="1"
+          step="0.01"
+          value="1"
+          style="width: 100px; margin: 0 1em"
+        />
+        <input
+          type="range"
+          id="player-seek"
+          min="0"
+          max="100"
+          value="0"
+          step="1"
+        />
+        <span id="player-time">0:00 / 0:00</span>
+        <audio id="player-audio" style="display: none"></audio>
+      </div>
+    </footer>
+    <!-- ========== PLAYLIST MODAL ========== -->
+    <div id="playlist-modal" class="modal" style="display: none">
+      <div class="modal-content">
+        <button id="close-modal" style="float: right">&times;</button>
+        <h3>Playlists</h3>
+        <button id="new-playlist-btn">+ New Playlist</button>
+        <div id="playlist-list"></div>
+      </div>
+    </div>
+    <!-- ========== ACCOUNT MENU ========== -->
+    <div id="account-menu">
+      <button id="signout-btn" class="tooltip-btn">
+        Sign Out
+        <span class="tooltip-text">
+          This will clear your browser cache (no server)
+        </span>
+      </button>
+    </div>
+    <!-- ========== SCRIPTS ========== -->
+    <script src="main.js"></script>
+  </body>
+</html>

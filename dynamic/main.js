@@ -1,3 +1,4 @@
+// ====== DOM ELEMENTS ======
 const sidebarList = document.getElementById("sidebar-list");
 const homeBtn = document.getElementById("home-link");
 const addPlaylistBtn = document.getElementById("add-playlist-btn");
@@ -22,13 +23,18 @@ const playerLoop = document.getElementById("player-loop");
 const playerPrev = document.getElementById("player-prev");
 const playerNext = document.getElementById("player-next");
 
+// ====== STATE ======
+let allSongs = [];
 let currentPlaylistSong = null;
+let seeking = false;
 let playQueue = [];
 let playIndex = 0;
 let shuffleOn = false;
-let loopMode = 0;
+let loopMode = 0; // 0: off, 1: song, 2: queue
+let currentPlaylistView = null; // null for home, or array of songs for playlist
 let shuffleBag = [];
-let seeking = false;
+
+// ====== PLAYLIST STORAGE ======
 function getPlaylists() {
   return JSON.parse(localStorage.getItem("playlists") || "[]");
 }
@@ -49,6 +55,7 @@ function addSongToPlaylist(playlistName, song) {
   renderSidebarPlaylists();
 }
 
+// ====== SIDEBAR ======
 function renderSidebarPlaylists() {
   sidebarList.innerHTML = "";
   const playlists = getPlaylists();
@@ -59,14 +66,15 @@ function renderSidebarPlaylists() {
       const btn = document.createElement("button");
       btn.className = "playlist-link";
       btn.textContent = pl.name;
+      btn.style.width = "100%";
       btn.onclick = () => renderPlaylistContent(pl.name);
       sidebarList.appendChild(btn);
     });
   }
 }
 homeBtn.onclick = () => {
-  mainContent.innerHTML = document.querySelector("main").innerHTML;
-  attachSongEventHandlers();
+  currentPlaylistView = null;
+  renderDefaultContent();
 };
 addPlaylistBtn.onclick = () => {
   const name = prompt("Enter new playlist name:");
@@ -84,6 +92,123 @@ sidebarToggle.onclick = () => {
   document.getElementById("sidebar").classList.toggle("collapsed");
 };
 
+// ====== SONG GRID & PLAYLIST VIEW ======
+function renderSongs(songs) {
+  const grid = document.getElementById("song-grid");
+  grid.innerHTML = "";
+  songs.forEach((song, idx) => {
+    const imgSrc = `https://picsum.photos/seed/${song.id}/200`;
+    const div = document.createElement("div");
+    div.className = "song-item";
+    div.innerHTML = `
+      <button class="song-plus-btn" title="Add to playlist" data-songid="${song.id}">+</button>
+      <button class="play-btn" data-url="${song.url}" data-name="${song.name}" data-idx="${idx}">
+        <img src="${imgSrc}" alt="cover" class="song-item-img">
+        <div class="song-item-name">
+          ${song.name}
+        </div>
+      </button>
+    `;
+    grid.appendChild(div);
+  });
+  grid.querySelectorAll(".play-btn").forEach((btn) => {
+    btn.onclick = () => {
+      currentPlaylistView = null;
+      setPlayQueue(allSongs, allSongs[btn.dataset.idx].id);
+      playSongAt(playIndex);
+    };
+  });
+  grid.querySelectorAll(".song-plus-btn").forEach((btn) => {
+    btn.onclick = (e) => {
+      e.stopPropagation();
+      const songId = btn.getAttribute("data-songid");
+      currentPlaylistSong = allSongs.find((s) => s.id == songId);
+      openPlaylistModal();
+    };
+  });
+}
+function renderDefaultContent() {
+  mainContent.innerHTML = `<section>
+    <h2>Your Top Songs</h2>
+    <div id="song-grid" class="song-grid"></div>
+  </section>`;
+  renderSongs(allSongs);
+}
+function renderPlaylistContent(playlistName) {
+  const playlists = getPlaylists();
+  const playlist = playlists.find((p) => p.name === playlistName);
+  if (!playlist) {
+    mainContent.innerHTML = "<h2>Playlist not found.</h2>";
+    return;
+  }
+  let html = `
+    <h2 style="display:flex;align-items:center;gap:1em;">
+      ${playlist.name}
+      <button id="delete-playlist-btn" title="Delete Playlist" style="color:#fff;background:#b00;border:none;border-radius:50%;width:1.8em;height:1.8em;cursor:pointer;font-size:1em;display:inline-flex;align-items:center;justify-content:center;margin-left:0.5em;">
+        &#128465;
+      </button>
+    </h2>
+  `;
+  if (playlist.songs.length === 0) {
+    html += "<p>No songs in this playlist.</p>";
+  } else {
+    html += `<div class="song-grid" id="playlist-song-grid"></div>`;
+  }
+  mainContent.innerHTML = html;
+  if (playlist.songs.length > 0) {
+    currentPlaylistView = playlist.songs;
+    const grid = document.getElementById("playlist-song-grid");
+    playlist.songs.forEach((song, idx) => {
+      const imgSrc = `https://picsum.photos/seed/${song.id}/200`;
+      const div = document.createElement("div");
+      div.className = "song-item";
+      div.innerHTML = `
+        <button class="song-plus-btn" title="Add to playlist" data-songid="${song.id}">+</button>
+        <button class="play-btn" data-url="${song.url}" data-name="${song.name}" data-idx="${idx}">
+          <img src="${imgSrc}" alt="cover" class="song-item-img">
+          <div class="song-item-name">
+            ${song.name}
+          </div>
+        </button>
+      `;
+      grid.appendChild(div);
+    });
+    grid.querySelectorAll(".play-btn").forEach((btn) => {
+      btn.onclick = () => {
+        setPlayQueue(playlist.songs, playlist.songs[btn.dataset.idx].id);
+        playSongAt(playIndex);
+      };
+    });
+    grid.querySelectorAll(".song-plus-btn").forEach((btn) => {
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        const songId = btn.getAttribute("data-songid");
+        currentPlaylistSong =
+          allSongs.find((s) => s.id == songId) ||
+          playlist.songs.find((s) => s.id == songId);
+        openPlaylistModal();
+      };
+    });
+  } else {
+    currentPlaylistView = playlist.songs;
+  }
+  // Delete playlist button
+  const deleteBtn = document.getElementById("delete-playlist-btn");
+  if (deleteBtn) {
+    deleteBtn.onclick = function () {
+      if (confirm(`Delete playlist "${playlist.name}"?`)) {
+        let newPlaylists = getPlaylists().filter(
+          (pl) => pl.name !== playlist.name
+        );
+        savePlaylists(newPlaylists);
+        renderSidebarPlaylists();
+        renderDefaultContent();
+      }
+    };
+  }
+}
+
+// ====== PLAYLIST MODAL ======
 function openPlaylistModal() {
   renderPlaylistList();
   playlistModal.style.display = "flex";
@@ -122,9 +247,14 @@ newPlaylistBtn.onclick = function () {
   closePlaylistModal();
 };
 
-function setPlayQueue(songs, startIdx = 0) {
+// ====== PLAYER BAR & QUEUE LOGIC ======
+function setPlayQueue(songs, startId = null) {
   playQueue = [...songs];
-  playIndex = startIdx;
+  playIndex = 0;
+  if (startId !== null) {
+    const idx = playQueue.findIndex((s) => s.id == startId);
+    if (idx !== -1) playIndex = idx;
+  }
   if (shuffleOn) resetShuffleBag();
 }
 
@@ -145,13 +275,8 @@ function getNextShuffleIndex() {
 
 function playSongAt(idx) {
   playIndex = idx;
-  const songBtn = document.querySelectorAll(".play-btn")[playIndex];
-  if (songBtn) {
-    showPlayerBar(
-      songBtn.getAttribute("data-url"),
-      songBtn.getAttribute("data-name")
-    );
-  }
+  const song = playQueue[playIndex];
+  showPlayerBar(song.url, song.name, song.id, false);
 }
 
 function playNext() {
@@ -172,17 +297,18 @@ function playPrev() {
   playSongAt(playIndex);
 }
 
-function showPlayerBar(url, name) {
+function showPlayerBar(url, name, songId = null, setQueue = false) {
   playerAudio.pause();
   playerAudio.currentTime = 0;
   playerAudio.src = url;
   playerTitle.textContent = name;
   playerBar.style.display = "flex";
-  document.body.classList.add("player-visible");
+  document.body.classList.add("player-visible"); // Add this line
   playerAudio.play();
   playerPause.textContent = "⏸️";
 }
 
+// ====== BUTTON VISUAL STATE HELPERS ======
 function updateShuffleButton() {
   if (shuffleOn) {
     playerShuffle.classList.add("shuffle-on");
@@ -208,6 +334,7 @@ function updateLoopButton() {
   }
 }
 
+// ====== PLAYER BAR EVENTS ======
 playerPause.onclick = function () {
   if (playerAudio.paused) {
     playerAudio.play();
@@ -250,11 +377,13 @@ function formatTime(sec) {
   return `${m}:${s}`;
 }
 
+// Volume slider logic
 playerVolume.oninput = function () {
   playerAudio.volume = parseFloat(this.value);
 };
 playerAudio.volume = playerVolume.value;
 
+// Shuffle, Loop, Skip Buttons
 playerShuffle.onclick = function () {
   shuffleOn = !shuffleOn;
   updateShuffleButton();
@@ -273,17 +402,21 @@ playerPrev.onclick = function () {
   if (playQueue.length > 0) playPrev();
 };
 
+// Auto-advance logic
 playerAudio.addEventListener("ended", function () {
   if (loopMode === 1) {
+    // Loop song
     playerAudio.currentTime = 0;
     playerAudio.play();
   } else if (loopMode === 2) {
+    // Loop all
     playNext();
   } else if (playIndex < playQueue.length - 1) {
     playNext();
   }
 });
 
+// ====== ACCOUNT MENU ======
 accountBtn.onclick = function (e) {
   e.stopPropagation();
   accountMenu.style.display =
@@ -303,100 +436,13 @@ signoutBtn.onclick = function () {
   location.reload();
 };
 
-function attachSongEventHandlers() {
-  document.querySelectorAll(".play-btn").forEach((btn, idx, btns) => {
-    btn.onclick = () => {
-      playQueue = Array.from(btns).map((b) => ({
-        url: b.getAttribute("data-url"),
-        name: b.getAttribute("data-name"),
-      }));
-      setPlayQueue(playQueue, idx);
-      playSongAt(idx);
-    };
+// ====== INITIAL LOAD ======
+fetch("music/songs.json")
+  .then((res) => res.json())
+  .then((songs) => {
+    allSongs = songs;
+    renderSidebarPlaylists();
+    renderDefaultContent();
+    updateShuffleButton();
+    updateLoopButton();
   });
-  document.querySelectorAll(".song-plus-btn").forEach((btn) => {
-    btn.onclick = (e) => {
-      e.stopPropagation();
-      const songBtn = btn.nextElementSibling;
-      currentPlaylistSong = {
-        url: songBtn.getAttribute("data-url"),
-        name: songBtn.getAttribute("data-name"),
-        id: btn.getAttribute("data-songid"),
-      };
-      openPlaylistModal();
-    };
-  });
-}
-function updateTimeAndSeek() {
-  const cur = formatTime(playerAudio.currentTime);
-  const dur = formatTime(playerAudio.duration);
-  playerTime.textContent = `${cur} / ${dur}`;
-  if (!seeking && !isNaN(playerAudio.duration)) {
-    playerSeek.value = (playerAudio.currentTime / playerAudio.duration) * 100;
-  }
-}
-
-playerAudio.addEventListener("timeupdate", updateTimeAndSeek);
-playerAudio.addEventListener("loadedmetadata", updateTimeAndSeek);
-
-function showHomePage() {
-  document.getElementById("home-section").style.display = "block";
-  document.getElementById("playlist-section").style.display = "none";
-}
-
-function showPlaylistPage(playlistName) {
-  document.getElementById("home-section").style.display = "none";
-  document.getElementById("playlist-section").style.display = "block";
-  renderPlaylistContent(playlistName);
-}
-
-function renderSidebarPlaylists() {
-  sidebarList.innerHTML = "";
-  const playlists = getPlaylists();
-  if (playlists.length === 0) {
-    sidebarList.innerHTML = "<div><em>No playlists yet.</em></div>";
-  } else {
-    playlists.forEach((pl) => {
-      const btn = document.createElement("button");
-      btn.className = "playlist-link";
-      btn.textContent = pl.name;
-      btn.onclick = () => showPlaylistPage(pl.name);
-      sidebarList.appendChild(btn);
-    });
-  }
-}
-
-function renderPlaylistContent(playlistName) {
-  const playlists = getPlaylists();
-  const playlist = playlists.find((p) => p.name === playlistName);
-  const title = document.getElementById("playlist-title");
-  const grid = document.getElementById("playlist-song-grid");
-  title.textContent = playlistName;
-  grid.innerHTML = "";
-  if (playlist && playlist.songs.length > 0) {
-    playlist.songs.forEach((song, idx) => {
-      const imgSrc = `https://picsum.photos/seed/${song.id}/200`;
-      const div = document.createElement("div");
-      div.className = "song-item";
-      div.innerHTML = `
-        <button class="song-plus-btn" title="Add to playlist" data-songid="${song.id}">+</button>
-        <button class="play-btn" data-url="${song.url}" data-name="${song.name}" data-idx="${idx}">
-          <img src="${imgSrc}" alt="cover" class="song-item-img">
-          <div class="song-item-name">
-            ${song.name}
-          </div>
-        </button>
-      `;
-      grid.appendChild(div);
-    });
-  } else {
-    grid.innerHTML = "<em>No songs in this playlist.</em>";
-  }
-  attachSongEventHandlers();
-}
-
-homeBtn.onclick = showHomePage;
-renderSidebarPlaylists();
-attachSongEventHandlers();
-updateShuffleButton();
-updateLoopButton();

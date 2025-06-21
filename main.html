@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -7,98 +6,484 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <!-- Main container for the app layout -->
     <div class="container">
-      <!-- ========== SIDEBAR ========== -->
+      <!-- Sidebar for navigation and playlists -->
       <nav id="sidebar" class="sidebar" aria-label="Sidebar">
-        <div class="sidebar-actions">
-          <button id="home-link" style="width: 100%; margin-bottom: 1em">
-            🏠 Home
-          </button>
-          <button id="add-playlist-btn" style="width: 100%; margin-bottom: 1em">
-            ➕ Add Playlist
-          </button>
+        <button id="home-link">🏠 Home</button>
+        <button id="add-playlist-btn">➕ Add Playlist</button>
+        <div class="sidebar-label">Playlists</div>
+        <div id="sidebar-list">
+          <div><em>No playlists yet.</em></div>
         </div>
-        <ul id="sidebar-list">
-          <!-- Playlist items rendered here -->
-        </ul>
       </nav>
-      <!-- ========== MAIN CONTENT ========== -->
+      <!-- Main content area -->
       <div class="main-content">
-        <!-- ======= HEADER ======= -->
         <header>
-          <button id="sidebar-toggle" aria-label="Toggle sidebar">
-            &#9776;
+          <button id="sidebar-toggle" aria-label="Toggle sidebar">☰</button>
+          <input type="text" placeholder="Search for songs..." />
+          <button id="account-btn" aria-label="Account">
+            <span aria-hidden="true">👤</span>
           </button>
-          <input
-            type="text"
-            placeholder="Search for songs..."
-            style="flex: 1; margin: 0 1rem; max-width: 300px"
-          />
-          <button id="account-btn">Account</button>
         </header>
-        <!-- ======= DYNAMIC MAIN AREA ======= -->
+        <!-- Main display area for songs and playlists -->
         <main id="main-content">
-          <!-- Song grid or playlist content rendered here -->
+          <!-- Home section with all songs -->
+          <section id="home-section">
+            <h2>All songs</h2>
+            <div id="song-grid" class="song-grid">
+              <!-- Example Song Item -->
+              <div class="song-item">
+                <button
+                  class="song-plus-btn"
+                  title="Add to playlist"
+                  data-songid="1"
+                >
+                  +
+                </button>
+                <button
+                  class="play-btn"
+                  data-url="music/Amber Jay, More Plastic - Sirens [NCS Release].mp3"
+                  data-name="Amber Jay, More Plastic - Sirens [NCS Release]"
+                  data-idx="0"
+                >
+                  <img
+                    src="https://picsum.photos/seed/1/200"
+                    alt="cover"
+                    class="song-item-img"
+                  />
+                  <div class="song-item-name">
+                    Amber Jay, More Plastic - Sirens [NCS Release]
+                  </div>
+                </button>
+              </div>
+              <div class="song-item">
+                <button
+                  class="song-plus-btn"
+                  title="Add to playlist"
+                  data-songid="2"
+                >
+                  +
+                </button>
+                <button
+                  class="play-btn"
+                  data-url="music/BVSSL7ON, ANIZYZ - THE REDEEMER [NCS Release].mp3"
+                  data-name="BVSSL7ON, ANIZYZ - THE REDEEMER [NCS Release]"
+                  data-idx="1"
+                >
+                  <img
+                    src="https://picsum.photos/seed/2/200"
+                    alt="cover"
+                    class="song-item-img"
+                  />
+                  <div class="song-item-name">
+                    BVSSL7ON, ANIZYZ - THE REDEEMER [NCS Release]
+                  </div>
+                </button>
+              </div>
+              <div class="song-item">
+                <button
+                  class="song-plus-btn"
+                  title="Add to playlist"
+                  data-songid="3"
+                >
+                  +
+                </button>
+                <button
+                  class="play-btn"
+                  data-url="music/KPHK, Eluvo, Sayfalse - VEM LENTA! [NCS Release].mp3"
+                  data-name="KPHK, Eluvo, Sayfalse - VEM LENTA! [NCS Release]"
+                  data-idx="2"
+                >
+                  <img
+                    src="https://picsum.photos/seed/3/200"
+                    alt="cover"
+                    class="song-item-img"
+                  />
+                  <div class="song-item-name">
+                    KPHK, Eluvo, Sayfalse - VEM LENTA! [NCS Release]
+                  </div>
+                </button>
+              </div>
+              <div class="song-item">
+                <button
+                  class="song-plus-btn"
+                  title="Add to playlist"
+                  data-songid="4"
+                >
+                  +
+                </button>
+                <button
+                  class="play-btn"
+                  data-url="music/LULO, kaya! - Hit The Ground [NCS Release].mp3"
+                  data-name="LULO, kaya! - Hit The Ground [NCS Release]"
+                  data-idx="3"
+                >
+                  <img
+                    src="https://picsum.photos/seed/4/200"
+                    alt="cover"
+                    class="song-item-img"
+                  />
+                  <div class="song-item-name">
+                    LULO, kaya! - Hit The Ground [NCS Release]
+                  </div>
+                </button>
+              </div>
+              <div class="song-item">
+                <button
+                  class="song-plus-btn"
+                  title="Add to playlist"
+                  data-songid="5"
+                >
+                  +
+                </button>
+                <button
+                  class="play-btn"
+                  data-url="music/MUPP - X2 [NCS Release].mp3"
+                  data-name="MUPP - X2 [NCS Release]"
+                  data-idx="4"
+                >
+                  <img
+                    src="https://picsum.photos/seed/5/200"
+                    alt="cover"
+                    class="song-item-img"
+                  />
+                  <div class="song-item-name">MUPP - X2 [NCS Release]</div>
+                </button>
+              </div>
+              <div class="song-item">
+                <button
+                  class="song-plus-btn"
+                  title="Add to playlist"
+                  data-songid="6"
+                >
+                  +
+                </button>
+                <button
+                  class="play-btn"
+                  data-url="music/NOYSE, Rudeejay - Loner [NCS Release].mp3"
+                  data-name="NOYSE, Rudeejay - Loner [NCS Release]"
+                  data-idx="5"
+                >
+                  <img
+                    src="https://picsum.photos/seed/6/200"
+                    alt="cover"
+                    class="song-item-img"
+                  />
+                  <div class="song-item-name">
+                    NOYSE, Rudeejay - Loner [NCS Release]
+                  </div>
+                </button>
+              </div>
+              <div class="song-item">
+                <button
+                  class="song-plus-btn"
+                  title="Add to playlist"
+                  data-songid="7"
+                >
+                  +
+                </button>
+                <button
+                  class="play-btn"
+                  data-url="music/Nito-Onna, Mangoo - Reason [NCS Release].mp3"
+                  data-name="Nito-Onna, Mangoo - Reason [NCS Release]"
+                  data-idx="6"
+                >
+                  <img
+                    src="https://picsum.photos/seed/7/200"
+                    alt="cover"
+                    class="song-item-img"
+                  />
+                  <div class="song-item-name">
+                    Nito-Onna, Mangoo - Reason [NCS Release]
+                  </div>
+                </button>
+              </div>
+              <div class="song-item">
+                <button
+                  class="song-plus-btn"
+                  title="Add to playlist"
+                  data-songid="8"
+                >
+                  +
+                </button>
+                <button
+                  class="play-btn"
+                  data-url="music/Pasha, Carlos Ukareda, VALLO, NCT, Cartoon - Around Us (ft. Pasha &amp; Carlos Ukareda) [NCS Release].mp3"
+                  data-name="Pasha, Carlos Ukareda, VALLO, NCT, Cartoon - Around Us (ft. Pasha &amp; Carlos Ukareda) [NCS Release]"
+                  data-idx="7"
+                >
+                  <img
+                    src="https://picsum.photos/seed/8/200"
+                    alt="cover"
+                    class="song-item-img"
+                  />
+                  <div class="song-item-name">
+                    Pasha, Carlos Ukareda, VALLO, NCT, Cartoon - Around Us (ft.
+                    Pasha &amp; Carlos Ukareda) [NCS Release]
+                  </div>
+                </button>
+              </div>
+              <div class="song-item">
+                <button
+                  class="song-plus-btn"
+                  title="Add to playlist"
+                  data-songid="9"
+                >
+                  +
+                </button>
+                <button
+                  class="play-btn"
+                  data-url="music/Prong, BOTCASH, Justin OH - Ghost Of Me [NCS Release].mp3"
+                  data-name="Prong, BOTCASH, Justin OH - Ghost Of Me [NCS Release]"
+                  data-idx="8"
+                >
+                  <img
+                    src="https://picsum.photos/seed/9/200"
+                    alt="cover"
+                    class="song-item-img"
+                  />
+                  <div class="song-item-name">
+                    Prong, BOTCASH, Justin OH - Ghost Of Me [NCS Release]
+                  </div>
+                </button>
+              </div>
+              <div class="song-item">
+                <button
+                  class="song-plus-btn"
+                  title="Add to playlist"
+                  data-songid="10"
+                >
+                  +
+                </button>
+                <button
+                  class="play-btn"
+                  data-url="music/Zachz Winner - lover online [NCS Release].mp3"
+                  data-name="Zachz Winner - lover online [NCS Release]"
+                  data-idx="9"
+                >
+                  <img
+                    src="https://picsum.photos/seed/10/200"
+                    alt="cover"
+                    class="song-item-img"
+                  />
+                  <div class="song-item-name">
+                    Zachz Winner - lover online [NCS Release]
+                  </div>
+                </button>
+              </div>
+              <div class="song-item">
+                <button
+                  class="song-plus-btn"
+                  title="Add to playlist"
+                  data-songid="11"
+                >
+                  +
+                </button>
+                <button
+                  class="play-btn"
+                  data-url="music/gabriawll, QKReign - Missing Life [NCS Release].mp3"
+                  data-name="gabriawll, QKReign - Missing Life [NCS Release]"
+                  data-idx="10"
+                >
+                  <img
+                    src="https://picsum.photos/seed/11/200"
+                    alt="cover"
+                    class="song-item-img"
+                  />
+                  <div class="song-item-name">
+                    gabriawll, QKReign - Missing Life [NCS Release]
+                  </div>
+                </button>
+              </div>
+              <div class="song-item">
+                <button
+                  class="song-plus-btn"
+                  title="Add to playlist"
+                  data-songid="13"
+                >
+                  +
+                </button>
+                <button
+                  class="play-btn"
+                  data-url="music/m els, Pasha, Leowi, Cartoon - Wait A While (ft. Pasha &amp; m els) [NCS Release].mp3"
+                  data-name="m els, Pasha, Leowi, Cartoon - Wait A While (ft. Pasha &amp; m els) [NCS Release]"
+                  data-idx="11"
+                >
+                  <img
+                    src="https://picsum.photos/seed/13/200"
+                    alt="cover"
+                    class="song-item-img"
+                  />
+                  <div class="song-item-name">
+                    m els, Pasha, Leowi, Cartoon - Wait A While (ft. Pasha &amp;
+                    m els) [NCS Release]
+                  </div>
+                </button>
+              </div>
+              <div class="song-item">
+                <button
+                  class="song-plus-btn"
+                  title="Add to playlist"
+                  data-songid="14"
+                >
+                  +
+                </button>
+                <button
+                  class="play-btn"
+                  data-url="music/nomu. - Rush [NCS Release].mp3"
+                  data-name="nomu. - Rush [NCS Release]"
+                  data-idx="12"
+                >
+                  <img
+                    src="https://picsum.photos/seed/14/200"
+                    alt="cover"
+                    class="song-item-img"
+                  />
+                  <div class="song-item-name">nomu. - Rush [NCS Release]</div>
+                </button>
+              </div>
+              <div class="song-item">
+                <button
+                  class="song-plus-btn"
+                  title="Add to playlist"
+                  data-songid="17"
+                >
+                  +
+                </button>
+                <button
+                  class="play-btn"
+                  data-url="music/youth® - stuck in my head! [NCS Release].mp3"
+                  data-name="youth® - stuck in my head! [NCS Release]"
+                  data-idx="13"
+                >
+                  <img
+                    src="https://picsum.photos/seed/17/200"
+                    alt="cover"
+                    class="song-item-img"
+                  />
+                  <div class="song-item-name">
+                    youth® - stuck in my head! [NCS Release]
+                  </div>
+                </button>
+              </div>
+              <div class="song-item">
+                <button
+                  class="song-plus-btn"
+                  title="Add to playlist"
+                  data-songid="18"
+                >
+                  +
+                </button>
+                <button
+                  class="play-btn"
+                  data-url="music/youth® - tell me why [NCS Release](1).mp3"
+                  data-name="youth® - tell me why [NCS Release](1)"
+                  data-idx="14"
+                >
+                  <img
+                    src="https://picsum.photos/seed/18/200"
+                    alt="cover"
+                    class="song-item-img"
+                  />
+                  <div class="song-item-name">
+                    youth® - tell me why [NCS Release](1)
+                  </div>
+                </button>
+              </div>
+              <div class="song-item">
+                <button
+                  class="song-plus-btn"
+                  title="Add to playlist"
+                  data-songid="19"
+                >
+                  +
+                </button>
+                <button
+                  class="play-btn"
+                  data-url="music/youth® - tell me why [NCS Release].mp3"
+                  data-name="youth® - tell me why [NCS Release]"
+                  data-idx="15"
+                >
+                  <img
+                    src="https://picsum.photos/seed/19/200"
+                    alt="cover"
+                    class="song-item-img"
+                  />
+                  <div class="song-item-name">
+                    youth® - tell me why [NCS Release]
+                  </div>
+                </button>
+              </div>
+            </div>
+          </section>
+          <!-- Playlist view section (hidden by default) -->
+          <section id="playlist-section">
+            <h2 id="playlist-title"></h2>
+            <div id="playlist-song-grid" class="song-grid"></div>
+          </section>
         </main>
       </div>
     </div>
-    <!-- ========== PLAYER BAR ========== -->
-    <footer>
-      <div id="player-bar" style="display: none">
-        <button id="player-pause">⏸️</button>
-        <span id="player-title"></span>
-        <input
-          type="range"
-          id="player-seek"
-          min="0"
-          max="100"
-          value="0"
-          step="1"
-        />
-        <span id="player-time">0:00 / 0:00</span>
-        <audio id="player-audio" style="display: none"></audio>
-      </div>
-    </footer>
-    <!-- ========== PLAYLIST MODAL ========== -->
-    <div id="playlist-modal" class="modal" style="display: none">
+
+    <!-- Player bar at the bottom of the page -->
+    <div id="player-bar">
+      <button id="player-shuffle" class="player-btn" title="Shuffle Off">
+        🔀
+      </button>
+      <button id="player-loop" class="player-btn" title="Loop Off">🔁</button>
+      <button id="player-prev" class="player-btn" title="Previous Song">
+        ⏮️
+      </button>
+      <button id="player-pause" class="player-btn">⏸️</button>
+      <button id="player-next" class="player-btn" title="Next Song">⏭️</button>
+      <span id="player-title"
+        >m els, Pasha, Leowi, Cartoon - Wait A While (ft. Pasha &amp; m els)
+        [NCS Release]</span
+      >
+      <input
+        type="range"
+        id="player-volume"
+        min="0"
+        max="1"
+        step="0.01"
+        value=".65"
+      />
+      <input
+        type="range"
+        id="player-seek"
+        min="0"
+        max="100"
+        value="0"
+        step="1"
+      />
+      <span id="player-time">0:00 / 2:55</span>
+      <audio
+        id="player-audio"
+        src="music/m els, Pasha, Leowi, Cartoon - Wait A While (ft. Pasha &amp; m els) [NCS Release].mp3"
+      ></audio>
+    </div>
+
+    <!-- Modal for adding a song to a playlist -->
+    <div id="playlist-modal" class="modal">
       <div class="modal-content">
-        <button id="close-modal" style="float: right">&times;</button>
+        <button id="close-modal">×</button>
         <h3>Playlists</h3>
         <button id="new-playlist-btn">+ New Playlist</button>
         <div id="playlist-list"></div>
       </div>
     </div>
-    <!-- ========== ACCOUNT MENU ========== -->
-    <div
-      id="account-menu"
-      style="
-        display: none;
-        position: fixed;
-        right: 1em;
-        top: 4em;
-        background: #222;
-        color: #fff;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px #0008;
-        z-index: 500;
-        min-width: 120px;
-      "
-    >
-      <button
-        id="signout-btn"
-        style="
-          width: 100%;
-          background: none;
-          border: none;
-          color: #fff;
-          padding: 1em;
-          cursor: pointer;
-        "
-      >
+    <!-- Account menu dropdown -->
+    <div id="account-menu">
+      <button id="signout-btn" class="tooltip-btn">
         Sign Out
+        <span class="tooltip-text">
+          <!-- Since there is no backend server i chose to just clear the cache which will remove all playlist -->
+          This will clear your browser cache (no server)
+        </span>
       </button>
     </div>
-    <!-- ========== SCRIPTS ========== -->
+    <!-- Main script file -->
     <script src="main.js"></script>
   </body>
 </html>
