@@ -129,7 +129,7 @@ function renderSongs(songs) {
 }
 function renderDefaultContent() {
   mainContent.innerHTML = `<section>
-    <h2>Your Top Songs</h2>
+    <h2>All songs</h2>
     <div id="song-grid" class="song-grid"></div>
   </section>`;
   renderSongs(allSongs);

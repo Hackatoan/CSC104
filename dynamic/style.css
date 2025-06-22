@@ -232,14 +232,12 @@ body.player-visible main {
     transform: none;
   }
 }
-/* Song item image */
 .song-item-img {
   width: 100%;
   border-radius: 8px 8px 0 0;
   display: block;
 }
 
-/* Song item name container */
 .song-item-name {
   width: 100%;
   box-sizing: border-box;
@@ -250,7 +248,6 @@ body.player-visible main {
   border-radius: 0 0 8px 8px;
 }
 
-/* Play button for song */
 .play-btn {
   padding: 0;
   border: none;
@@ -259,7 +256,6 @@ body.player-visible main {
   width: 100%;
 }
 
-/* Playlist link button */
 .playlist-link {
   width: 100%;
 }

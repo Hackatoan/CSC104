@@ -1,39 +1,22 @@
-/*
-  Table of Contents:
-  1. General & Body Styles
-  2. Layout
-  3. Sidebar
-  4. Main Content Area
-  5. Song Grid & Items
-  6. Player Bar
-  7. Modal
-  8. Account Menu & Tooltip
-  9. Media Queries
-*/
-
-/* ====== 1. General & Body Styles ====== */
 html,
 body {
   height: 100%;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  background: #181818; /* Set a base background for the whole page */
+  background: #181818;
   color: #fff;
 }
 
-/* When player is visible, add margin to the bottom of main content to avoid overlap */
 body.player-visible main {
-  margin-bottom: 4rem; /* Space for the player bar */
+  margin-bottom: 4rem;
 }
 
-/* ====== 2. Layout ====== */
 .container {
   display: flex;
   height: 100vh;
 }
 
-/* ====== 3. Sidebar ====== */
 .sidebar {
   width: 200px;
   background: #222;
@@ -48,7 +31,6 @@ body.player-visible main {
   width: 0;
 }
 
-/* Sidebar navigation buttons */
 #home-link,
 #add-playlist-btn {
   display: block;
@@ -58,23 +40,21 @@ body.player-visible main {
   box-sizing: border-box;
 }
 
-/* "Playlists" text label in the sidebar */
 .sidebar-label {
-  padding: 0.5em 0 0.25em 1em; /* Adjusted padding */
+  padding: 0.5em 0 0.25em 1em;
   font-size: 0.95em;
   color: #aaa;
   letter-spacing: 1px;
-  text-transform: uppercase; /* Good for labels */
+  text-transform: uppercase;
 }
 
 #sidebar-list {
   padding: 0 0.5em;
   margin: 0;
   list-style: none;
-  overflow-y: auto; /* Allow scrolling if playlists overflow */
+  overflow-y: auto;
 }
 
-/* Buttons for individual playlists in sidebar and modal */
 .playlist-link,
 #playlist-list button {
   width: 100%;
@@ -86,9 +66,9 @@ body.player-visible main {
   text-align: left;
   cursor: pointer;
   margin: 0.15em 0;
-  white-space: nowrap; /* Prevent text wrapping */
+  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; /* Add ... for long names */
+  text-overflow: ellipsis;
 }
 
 .playlist-link:hover,
@@ -98,25 +78,22 @@ body.player-visible main {
   text-decoration: underline;
 }
 
-/* ====== 4. Main Content Area ====== */
 .main-content {
   flex: 1;
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* Prevent content from breaking layout */
+  overflow: hidden;
 }
 
-/* Header section */
 header {
   background: #333;
   color: #fff;
   padding: 1rem;
   display: flex;
   align-items: center;
-  flex-shrink: 0; /* Prevent header from shrinking */
+  flex-shrink: 0;
 }
 
-/* Search input in the header */
 header input[type="text"] {
   flex: 1;
   margin: 0 1rem;
@@ -128,7 +105,6 @@ header input[type="text"] {
   color: #fff;
 }
 
-/* Main content display area */
 main {
   flex: 1;
   overflow-y: auto;
@@ -136,15 +112,12 @@ main {
   background: #181818;
 }
 
-/* Initially hide the playlist-specific section */
 #playlist-section {
   display: none;
 }
 
-/* ====== 5. Song Grid & Items ====== */
 .song-grid {
   display: grid;
-  /* Use CSS variables for easier media query adjustments */
   --grid-columns: 5;
   grid-template-columns: repeat(var(--grid-columns), 1fr);
   gap: 1rem;
@@ -154,7 +127,7 @@ main {
   background: #282828;
   border-radius: 8px;
   position: relative;
-  overflow: hidden; /* Ensure content stays within rounded corners */
+  overflow: hidden;
   transition: background-color 0.2s;
 }
 
@@ -162,20 +135,19 @@ main {
   background-color: #3a3a3a;
 }
 
-/* The '+' button to add a song to a playlist */
 .song-plus-btn {
   position: absolute;
   top: 8px;
   right: 8px;
-  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  background: rgba(0, 0, 0, 0.5);
   color: #fff;
   border: none;
   border-radius: 50%;
   width: 28px;
   height: 28px;
-  font-size: 1.2em; /* Make plus bigger */
+  font-size: 1.2em;
   cursor: pointer;
-  z-index: 2; /* Ensure it's above the play button */
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -186,7 +158,6 @@ main {
   background-color: #1db954;
 }
 
-/* Main clickable area for playing a song */
 .play-btn {
   padding: 0;
   border: none;
@@ -204,15 +175,13 @@ main {
 }
 
 .song-item-name {
-  /* Let the name sit cleanly inside the song-item card */
   padding: 0.75em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  display: block; /* Ensures padding and overflow work correctly */
+  display: block;
 }
 
-/* ====== 6. Player Bar ====== */
 #player-bar {
   position: fixed;
   left: 0;
@@ -221,15 +190,14 @@ main {
   background: #222;
   color: #fff;
   padding: 1rem;
-  display: none; /* Hidden by default, shown with JS */
+  display: none;
   align-items: center;
-  gap: 0.5rem; /* Increased gap for better spacing */
+  gap: 0.5rem;
   z-index: 100;
-  height: 3rem; /* Give it a fixed height */
+  height: 3rem;
   box-sizing: border-box;
 }
 
-/* General style for all buttons in the player */
 .player-btn,
 #player-pause {
   background: none;
@@ -247,7 +215,6 @@ main {
   background: #333;
 }
 
-/* Active state for shuffle and loop buttons */
 #player-shuffle.shuffle-on,
 #player-loop.active {
   color: #1db954;
@@ -277,12 +244,10 @@ main {
   color: #aaa;
 }
 
-/* Hide the actual audio element */
 #player-audio {
   display: none;
 }
 
-/* ====== 7. Modal ====== */
 .modal {
   position: fixed;
   z-index: 200;
@@ -290,14 +255,14 @@ main {
   top: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.7); /* Darker overlay */
-  display: none; /* Hidden by default, shown with JS */
+  background: rgba(0, 0, 0, 0.7);
+  display: none;
   align-items: center;
   justify-content: center;
 }
 
 .modal-content {
-  background: #282828; /* Match song item background */
+  background: #282828;
   color: #fff;
   padding: 2em;
   border-radius: 8px;
@@ -306,7 +271,6 @@ main {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
-/* Close button ('x') in the modal */
 #close-modal {
   float: right;
   background: none;
@@ -320,14 +284,13 @@ main {
   color: #fff;
 }
 
-/* ====== 8. Account Menu & Tooltip ====== */
 #account-btn {
   margin-left: auto;
   background: #333;
   color: #fff;
   border: none;
   padding: 0.5em 1em;
-  border-radius: 15px; /* Fully rounded */
+  border-radius: 15px;
   cursor: pointer;
   font-size: 1em;
   transition: background 0.2s;
@@ -338,17 +301,17 @@ main {
 }
 
 #account-menu {
-  display: none; /* Hidden by default, shown with JS */
+  display: none;
   position: fixed;
   right: 1em;
-  top: 4.5em; /* Adjusted to not overlap header */
+  top: 4.5em;
   background: #282828;
   color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 8px #0008;
   z-index: 500;
   min-width: 120px;
-  overflow: hidden; /* To respect border-radius on children */
+  overflow: hidden;
 }
 
 #signout-btn {
@@ -395,7 +358,6 @@ main {
   visibility: visible;
 }
 
-/* ====== 9. Media Queries ====== */
 @media (max-width: 1200px) {
   .song-grid {
     --grid-columns: 4;
@@ -421,7 +383,7 @@ main {
     --grid-columns: 2;
   }
   #player-title {
-    display: none; /* Hide title on small screens to save space */
+    display: none;
   }
 }
 
