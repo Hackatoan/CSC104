@@ -440,9 +440,6 @@ signoutBtn.onclick = function () {
 fetch("../../music/songs.json")
   .then((res) => res.json())
   .then((songs) => {
-    // Adjust song URLs to be relative to the new folder structure.
-    // The HTML is in dynamic/, so we need to go up two levels to reach the root
-    // where the music/ folder is now located.
     allSongs = songs.map((song) => {
       const fileName = song.url.substring(song.url.lastIndexOf("/") + 1);
       return {
