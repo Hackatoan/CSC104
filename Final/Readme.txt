@@ -1,19 +1,5 @@
-Assignment 4.1: CSS Basics - Text Styling
+CSC104 Final Project
 ==============
-
-Assignment Description
-----------------------
-This project takes an existing HTML file and enhances its appearance and user experience using CSS. The goal is to experiment with various CSS properties affecting text display, background, and spacing to create an effective, interesting, and user-friendly page design. The interface should be self-explanatory and the code should be well-formatted and commented.
-
-The solution is written for the problem assigned and includes all required functionality.
-
-
-Project Files
--------------
-*   HTML File: main.html
-*   CSS File: style.css
-*   JavaScript File: main.js
-
 
 Functionality Overview
 ----------------------
