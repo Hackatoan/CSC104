@@ -22,6 +22,7 @@ const playerShuffle = document.getElementById("player-shuffle");
 const playerLoop = document.getElementById("player-loop");
 const playerPrev = document.getElementById("player-prev");
 const playerNext = document.getElementById("player-next");
+const aboutBtn = document.getElementById("about-link");
 
 // ====== STATE ======
 let allSongs = [];
@@ -75,6 +76,9 @@ function renderSidebarPlaylists() {
 homeBtn.onclick = () => {
   currentPlaylistView = null;
   renderDefaultContent();
+};
+aboutBtn.onclick = () => {
+  mainContent.innerHTML = `<section id="about-section">about</section>`;
 };
 addPlaylistBtn.onclick = () => {
   const name = prompt("Enter new playlist name:");

@@ -32,6 +32,8 @@ body.player-visible main {
 }
 
 #home-link,
+#about-link,
+#contact-link,
 #add-playlist-btn {
   display: block;
   width: calc(100% - 1em);
