@@ -27,6 +27,14 @@ body.player-visible main {
   flex-direction: column;
 }
 
+.sidebar-content-wrapper {
+  width: 200px; /* Match the sidebar's expanded width */
+  flex-shrink: 0; /* Prevent this from shrinking during the transition */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 .sidebar.collapsed {
   width: 0;
 }
@@ -404,4 +412,62 @@ main {
     bottom: auto;
     padding: 0.5em;
   }
+}
+
+/* ====== CONTACT FORM ====== */
+#support-form {
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  background-color: #222;
+}
+
+#support-form p {
+  color: #ccc;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+#support-form label {
+  display: block;
+  margin-bottom: 5px;
+  color: #eee;
+  font-weight: bold;
+}
+
+#support-form input[type="text"],
+#support-form input[type="email"],
+#support-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #555;
+  border-radius: 4px;
+  background-color: #333;
+  color: #eee;
+  box-sizing: border-box;
+}
+
+#support-form textarea {
+  resize: vertical;
+}
+
+#support-form button[type="submit"] {
+  width: 100%;
+  padding: 12px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.1em;
+  transition: background-color 0.2s ease;
+}
+
+#support-form button[type="submit"]:hover {
+  background-color: #0056b3;
 }

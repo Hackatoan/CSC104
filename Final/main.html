@@ -10,23 +10,14 @@
     <div class="container">
       <!-- ========== SIDEBAR ========== -->
       <nav id="sidebar" class="sidebar" aria-label="Sidebar">
-        <button id="home-link" style="margin-bottom: 1em">🏠 Home</button>
-        <button id="about-link" style="margin-bottom: 1em">About</button>
-        <button id="contact-link" style="margin-bottom: 1em">Contact</button>
-        <button id="add-playlist-btn" style="margin-bottom: 1em">
-          ➕ Add Playlist
-        </button>
-        <div
-          style="
-            padding: 0.5em 0 0.25em 0.5em;
-            font-size: 0.95em;
-            color: #aaa;
-            letter-spacing: 1px;
-          "
-        >
-          Playlists
+        <div class="sidebar-content-wrapper">
+          <button id="home-link">🏠 Home</button>
+          <button id="about-link">ℹ️ About</button>
+          <button id="contact-link">✉️ Contact</button>
+          <button id="add-playlist-btn">➕ Add Playlist</button>
+          <div class="sidebar-label">Playlists</div>
+          <div id="sidebar-list"></div>
         </div>
-        <div id="sidebar-list"></div>
       </nav>
       <!-- ========== MAIN CONTENT ========== -->
       <div class="main-content">
@@ -36,9 +27,9 @@
             &#9776;
           </button>
           <input
+            id="search-input"
             type="text"
             placeholder="Search for songs..."
-            style="flex: 1; margin: 0 1rem; max-width: 300px"
           />
           <button id="account-btn" aria-label="Account">
             <span aria-hidden="true">👤</span>
@@ -52,7 +43,7 @@
     </div>
     <!-- ========== PLAYER BAR ========== -->
     <footer>
-      <div id="player-bar" style="display: none">
+      <div id="player-bar">
         <button id="player-shuffle" class="player-btn" title="Shuffle Off">
           🔀
         </button>
@@ -72,7 +63,6 @@
           max="1"
           step="0.01"
           value="1"
-          style="width: 100px; margin: 0 1em"
         />
         <input
           type="range"
@@ -83,13 +73,13 @@
           step="1"
         />
         <span id="player-time">0:00 / 0:00</span>
-        <audio id="player-audio" style="display: none"></audio>
+        <audio id="player-audio"></audio>
       </div>
     </footer>
     <!-- ========== PLAYLIST MODAL ========== -->
-    <div id="playlist-modal" class="modal" style="display: none">
+    <div id="playlist-modal" class="modal">
       <div class="modal-content">
-        <button id="close-modal" style="float: right">&times;</button>
+        <button id="close-modal">&times;</button>
         <h3>Playlists</h3>
         <button id="new-playlist-btn">+ New Playlist</button>
         <div id="playlist-list"></div>

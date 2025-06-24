@@ -21,8 +21,10 @@ const playerVolume = document.getElementById("player-volume");
 const playerShuffle = document.getElementById("player-shuffle");
 const playerLoop = document.getElementById("player-loop");
 const playerPrev = document.getElementById("player-prev");
-const playerNext = document.getElementById("player-next");
 const aboutBtn = document.getElementById("about-link");
+const playerNext = document.getElementById("player-next"); // Moved for consistency, no functional change
+const contactBtn = document.getElementById("contact-link");
+const searchInput = document.getElementById("search-input");
 
 // ====== STATE ======
 let allSongs = [];
@@ -75,10 +77,24 @@ function renderSidebarPlaylists() {
 }
 homeBtn.onclick = () => {
   currentPlaylistView = null;
+  searchInput.value = "";
   renderDefaultContent();
 };
+contactBtn.onclick = () => {
+  searchInput.value = "";
+  renderContactContent();
+};
 aboutBtn.onclick = () => {
-  mainContent.innerHTML = `<section id="about-section">about</section>`;
+  searchInput.value = "";
+  mainContent.innerHTML = `
+    <section id="about-section" style="padding: 20px; max-width: 800px; margin: auto;">
+      <h2>About This Project</h2>
+      <p>This application is a final project assignment for the <strong>CSC104</strong> course.</p>
+      <p>It functions as a simple music player</p>
+      <p>All songs featured in this application are sourced from <a href="https://ncs.io/" target="_blank" style="color: #1db954; text-decoration: none;">NCS.io</a> (NoCopyrightSounds), providing royalty-free music for creators.</p>
+      <p>Album cover images are dynamically generated and provided by <a href="https://picsum.photos/" target="_blank" style="color: #1db954; text-decoration: none;">Picsum.photos</a>.</p>
+    </section>
+  `;
 };
 addPlaylistBtn.onclick = () => {
   const name = prompt("Enter new playlist name:");
@@ -139,6 +155,7 @@ function renderDefaultContent() {
   renderSongs(allSongs);
 }
 function renderPlaylistContent(playlistName) {
+  searchInput.value = "";
   const playlists = getPlaylists();
   const playlist = playlists.find((p) => p.name === playlistName);
   if (!playlist) {
@@ -209,6 +226,63 @@ function renderPlaylistContent(playlistName) {
         renderDefaultContent();
       }
     };
+  }
+}
+
+// ====== SEARCH ======
+function handleSearch() {
+  // The search should only affect the "All Songs" view.
+  // The `currentPlaylistView` state variable is null only on the "All Songs" view.
+  if (currentPlaylistView !== null) {
+    return;
+  }
+
+  const searchTerm = searchInput.value.toLowerCase();
+  const filteredSongs = allSongs.filter((song) =>
+    song.name.toLowerCase().includes(searchTerm)
+  );
+  renderSongs(filteredSongs);
+}
+
+searchInput.addEventListener("input", handleSearch);
+
+// ====== CONTACT PAGE ======
+function renderContactContent() {
+  mainContent.innerHTML = `
+    <section id="contact-section">
+      <h2>Submit a Support Request</h2>
+      <form id="support-form">
+        <p>
+          Please fill out the form below to submit a support request.
+        </p>
+        <div class="form-group">
+          <label for="name">Your Name:</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Your Email:</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="subject">Subject:</label>
+          <input type="text" id="subject" name="subject" required>
+        </div>
+        <div class="form-group">
+          <label for="message">Message:</label>
+          <textarea id="message" name="message" rows="6" required></textarea>
+        </div>
+        <button type="submit">Submit Request</button>
+      </form>
+    </section>
+  `;
+
+  const supportForm = document.getElementById("support-form");
+  if (supportForm) {
+    supportForm.addEventListener("submit", (e) => {
+      e.preventDefault(); // Prevent actual form submission
+      alert("Support request submitted! (This is a dummy form)");
+      supportForm.reset(); // Clear the form after submission
+    });
   }
 }
 
