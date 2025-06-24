@@ -471,3 +471,23 @@ main {
 #support-form button[type="submit"]:hover {
   background-color: #0056b3;
 }
+
+/* ====== ABOUT PAGE ====== */
+#about-section {
+  padding: 20px;
+  max-width: 800px;
+  margin: auto;
+}
+
+#about-section p {
+  line-height: 1.6;
+}
+
+#about-section a {
+  color: #1db954;
+  text-decoration: none;
+}
+
+#about-section a:hover {
+  text-decoration: underline;
+}
