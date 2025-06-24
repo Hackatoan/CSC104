@@ -93,7 +93,8 @@ aboutBtn.onclick = () => {
       <p>It functions as a simple music player</p>
       <p>All songs featured in this application are sourced from <a href="https://ncs.io/" target="_blank" style="color: #1db954; text-decoration: none;">NCS.io</a> (NoCopyrightSounds), providing royalty-free music for creators.</p>
       <p>Album cover images are dynamically generated and provided by <a href="https://picsum.photos/" target="_blank" style="color: #1db954; text-decoration: none;">Picsum.photos</a>.</p>
-    </section>
+      <p>By Jacob P Harris</p>
+      </section>
   `;
 };
 addPlaylistBtn.onclick = () => {
